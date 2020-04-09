@@ -10,31 +10,29 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var previousNumber: Double = 0;
     var mathEvent = false
     var lastPressed = 0;
     var willBeCountArray = [String]();
  
     
-    @IBOutlet weak var display: UILabel!
+    @IBOutlet weak var display: UILabel! // the big label
     
-    @IBOutlet weak var showsAllDisplay: UILabel!
+    @IBOutlet weak var showsAllDisplay: UILabel! // the upper label where the whole ekvation is shown
     
-    @IBAction func numbers(_ sender: UIButton) //function for when nr 0-9 gets pressed
+    @IBAction func numbers(_ sender: UIButton) //function for when nr 0-9 and comma (,) are pressed
     {
-        if lastPressed != 16
+        if lastPressed != 16 // if "=" is not the the last one pressed
         {
             lastPressed = sender.tag
-            if mathEvent == true
+            if mathEvent == true // if ongoing math
             {
                 display.text =  String(sender.tag - 1)
                 showsAllDisplay.text = showsAllDisplay.text! + String(sender.tag - 1)
                 mathEvent = false
             }
-            
             else
             {
-                if sender.tag == 18
+                if sender.tag == 18 // special for comma
                 {
                     display.text = display.text! + "."
                     showsAllDisplay.text = showsAllDisplay.text! + "."
@@ -49,7 +47,6 @@ class ViewController: UIViewController {
         else // if last pressed was =, rinse all
         {
             display.text = String(sender.tag - 1);
-            previousNumber = 0;
             mathEvent = false
             lastPressed = 0;
             showsAllDisplay.text = String(sender.tag - 1)
@@ -65,8 +62,7 @@ class ViewController: UIViewController {
             if display.text != "" &&
             sender.tag != 11 &&
             sender.tag != 16
-        {   
-            //previousNumber = Double (display.text!)!
+        {
             
             if sender.tag == 12 //divide
             {
@@ -106,6 +102,7 @@ class ViewController: UIViewController {
         {
             showsAllDisplay.text = showsAllDisplay.text! + "="
             while willBeCountArray.contains("x") || willBeCountArray.contains("/") || willBeCountArray.contains("%")
+                // while the array contains of following, these will be handled first, from left to right
             {
                 let first_sign = FirstSign(willBeCountArray)
                
@@ -147,7 +144,6 @@ class ViewController: UIViewController {
         else if sender.tag == 11
         {
             display.text = ""
-            previousNumber = 0;
             mathEvent = false
             showsAllDisplay.text = ""
             willBeCountArray.removeAll();
@@ -226,9 +222,9 @@ class ViewController: UIViewController {
            holder = num1 - num2
            }
             
-        let holder2 = String(holder)
-        theArray.insert(holder2, at: first_sign!+2)
-        theArray.remove(at: first_sign!)
+        let holder2 = String(holder) //
+        theArray.insert(holder2, at: first_sign!+2) // insert the answer in array
+        theArray.remove(at: first_sign!) // remove the used elements (num1, num2 and operation)
         theArray.remove(at: first_sign!)
         theArray.remove(at: first_sign! - 1)
         return theArray
