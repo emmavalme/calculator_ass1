@@ -211,7 +211,9 @@ class ViewController: UIViewController {
          }
         if operation == "%"
          {
-         holder = (num1/100) * num2 // X % off Y
+           //holder = (num1/100) * num2 // X % off Y (procent)
+             holder = num1.truncatingRemainder(dividingBy: num2) //rest
+           // NOTE; it got me confuesed with the % sign so I have two different functions you can change between.
          }
         if operation == "+"
            {
